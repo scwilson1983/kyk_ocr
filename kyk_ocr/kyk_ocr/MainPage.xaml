@@ -7,8 +7,13 @@
              x:Class="kyk_ocr.MainPage">
 
     <StackLayout>
-        <Entry Placeholder="Serial Number" x:Name="serialNumberTxt" />
-        <Button Text="OCR" Clicked="OpenOCRScanner" />
+        <StackLayout x:Name="FieldLayout">
+        </StackLayout>
+        <Button Text="Scan Information" Clicked="OpenOCRScanner" x:Name="ScanBtn" />
+        <StackLayout x:Name="LoaderLayout" IsVisible="false">
+            <Label Text="Analysing Image..."></Label>
+            <ActivityIndicator x:Name="Loader" IsRunning="true" />
+        </StackLayout>
     </StackLayout>
 
 </ContentPage>

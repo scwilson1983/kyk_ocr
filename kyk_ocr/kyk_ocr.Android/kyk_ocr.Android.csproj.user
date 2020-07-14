@@ -3,5 +3,7 @@
   <PropertyGroup>
     <SelectedDevice>galaxy_nexus_kit_kat_4_4_-_api_19</SelectedDevice>
     <DefaultDevice>galaxy_nexus_kit_kat_4_4_-_api_19</DefaultDevice>
+    <ProjectView>ProjectFiles</ProjectView>
+    <AndroidDesignerPreferredTheme>Theme.AppCompat.Light.NoActionBar</AndroidDesignerPreferredTheme>
   </PropertyGroup>
 </Project>

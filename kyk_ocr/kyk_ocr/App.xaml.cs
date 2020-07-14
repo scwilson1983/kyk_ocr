@@ -1,6 +1,5 @@
-﻿using System;
+﻿using kyk_ocr.Core;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace kyk_ocr
 {
@@ -8,9 +7,10 @@ namespace kyk_ocr
     {
         public App()
         {
+            DependencyService.Register<IOCRService, CloudFormRecognizerService>();
             InitializeComponent();
-
-            MainPage = new MainPage();
+            var ocrService = DependencyService.Resolve<IOCRService>();
+            MainPage = new MainPage(ocrService);
         }
 
         protected override void OnStart()

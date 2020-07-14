@@ -7,6 +7,8 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Plugin.Media;
+using Xamarin.Forms;
+using kyk_ocr.Core;
 
 namespace kyk_ocr.Droid
 {
@@ -21,7 +23,6 @@ namespace kyk_ocr.Droid
             base.OnCreate(savedInstanceState);
 
             await CrossMedia.Current.Initialize();
-
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());

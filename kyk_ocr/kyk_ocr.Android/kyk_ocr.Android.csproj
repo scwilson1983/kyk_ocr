@@ -93,6 +93,10 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\kyk_ocr.Core\kyk_ocr.Core.csproj">
+      <Project>{12671618-5f7f-4bfd-be51-6492f69bd6d1}</Project>
+      <Name>kyk_ocr.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\kyk_ocr\kyk_ocr.csproj">
       <Project>{8903D023-E3B7-47E2-A96C-3B25869618FB}</Project>
       <Name>kyk_ocr</Name>

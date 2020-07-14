@@ -1,6 +1,9 @@
-﻿using Plugin.Media;
+﻿using kyk_ocr.Core;
+using Plugin.Media;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -11,9 +14,18 @@ namespace kyk_ocr
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
-        public MainPage()
+        IOCRService _ocrService;
+        List<string> _fields;
+        public MainPage(IOCRService ocrService)
         {
             InitializeComponent();
+            _ocrService = ocrService;
+            _fields = (new List<string> { "Manufacturer", "Model", "Serial Number" }).OrderBy(x => x).ToList();
+            foreach (var fieldName in _fields)
+            {
+                var entry = new Entry { Placeholder = fieldName };
+                FieldLayout.Children.Add(entry);
+            }
         }
 
         async void OpenOCRScanner(object sender, EventArgs e)
@@ -31,22 +43,37 @@ namespace kyk_ocr
                 return;
             }
 
+            FieldLayout.IsVisible = false;
+            ScanBtn.IsVisible = false;
             var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
             {
                 Directory = "Images",
                 Name = $"{Guid.NewGuid()}.jpg",
-                CompressionQuality = 90,
-                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium
+                CompressionQuality = 100,
+                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Large
             });
 
+            LoaderLayout.IsVisible = true;
             if (file == null)
-                return;
-
-            var image = ImageSource.FromStream(() =>
             {
-                var stream = file.GetStream();
-                return stream;
-            });
+                StopLoading();
+                return;
+            }
+            var results = (await _ocrService.GetOCRResultsAsync(file.GetStream())).ToList();
+            for(var i = 0; i < _fields.Count; i++)
+            {
+                var fieldValue = results.FirstOrDefault(x => x.Name == _fields[i])?.Value;
+                var fieldEntry = FieldLayout.Children[i] as Entry;
+                fieldEntry.Text = fieldValue;
+            }
+            StopLoading();
+        }
+
+        void StopLoading()
+        {
+            LoaderLayout.IsVisible = false;
+            FieldLayout.IsVisible = true;
+            ScanBtn.IsVisible = true;
         }
     }
 }
