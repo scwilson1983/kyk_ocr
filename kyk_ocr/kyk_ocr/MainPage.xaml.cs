@@ -63,8 +63,11 @@ namespace kyk_ocr
             for(var i = 0; i < _fields.Count; i++)
             {
                 var fieldValue = results.FirstOrDefault(x => x.Name == _fields[i])?.Value;
-                var fieldEntry = FieldLayout.Children[i] as Entry;
-                fieldEntry.Text = fieldValue;
+                if(!string.IsNullOrEmpty(fieldValue))
+                {
+                    var fieldEntry = FieldLayout.Children[i] as Entry;
+                    fieldEntry.Text = fieldValue;
+                }
             }
             StopLoading();
         }
