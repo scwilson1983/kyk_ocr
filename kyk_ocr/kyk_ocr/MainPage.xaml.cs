@@ -50,7 +50,7 @@ namespace kyk_ocr
                 Directory = "Images",
                 Name = $"{Guid.NewGuid()}.jpg",
                 CompressionQuality = 100,
-                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Large
+                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Small
             });
 
             LoaderLayout.IsVisible = true;
